@@ -16,6 +16,8 @@ import org.xmldb.api.modules.XMLResource;
 
 /**
  * XMLDatabaseConnector connects to the XMLDatabase and executes XQuery command.
+ * @author Wing
+ *
  */
 public class XMLDatabaseConnector {
 	protected String DRIVER = "org.exist.xmldb.DatabaseImpl";

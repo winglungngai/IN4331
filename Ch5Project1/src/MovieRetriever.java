@@ -6,6 +6,8 @@ import org.wdm.util.XQueryFileReader;
 
 /**
  * MovieRetriever contains a list of methods to retrieve movies according to different criteria.
+ * @author Wing
+ *
  */
 public class MovieRetriever {
 

@@ -6,8 +6,9 @@ import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-/*
+/**
  * XQueryFileReader reads a file containing XQuery statements.
+ * @author Wing
  */
 public class XQueryFileReader {
 
