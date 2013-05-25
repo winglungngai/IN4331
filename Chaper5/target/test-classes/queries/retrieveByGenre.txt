@@ -1,7 +1,0 @@
-let $ms:=doc("/movies/movies_alone.xml")/movies/movie
-let $as:=doc("/movies/artists_alone.xml")/artists/artist
-
-let $genre:='#genre'
-
-for $movies in $ms[genre=$genre]
-    return $movies

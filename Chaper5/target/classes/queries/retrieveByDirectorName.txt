@@ -1,7 +1,0 @@
-let $ms:=doc("/movies/movies_alone.xml")/movies/movie
-let $as:=doc("/movies/artists_alone.xml")/artists/artist
-
-let $directorName:='#directorName'
-
-let $directorId:=$as[contains(concat(first_name, ' ', last_name), $directorName)]/@id
-return $ms[director/@id=$directorId]
