@@ -4,17 +4,17 @@
 <head>
 <title>Web Data Management - Chapter 5</title>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
+<script src="js/hello.js"></script>
 <script>
 			$(document).ready(function(){
 			  $("#getButton").click(function(){
-			    $.get("asyncCall",function(data){
+			    $.get("ajax/asyncCall",function(data){
 			      alert(data);
 			    });
 			  });
 			  
 			  $("#postButton").click(function(){
-				    $.post("asyncCall",	
+				    $.post("ajax/asyncCall",	
 				    {
 				    	title: 'Lost in Translation',
 				    	genre: 'Drama'

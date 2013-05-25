@@ -10,6 +10,7 @@
  
   <servlet-mapping>
     <servlet-name>chapter5</servlet-name>
-    <url-pattern>/</url-pattern>
+    <url-pattern>/ajax/*</url-pattern>
   </servlet-mapping>
+ 
 </web-app>
