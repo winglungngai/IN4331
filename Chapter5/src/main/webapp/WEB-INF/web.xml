@@ -10,7 +10,7 @@
  
   <servlet-mapping>
     <servlet-name>chapter5</servlet-name>
-    <url-pattern>/ajax/*</url-pattern>
+    <url-pattern>/ajax/asyncCall</url-pattern>
   </servlet-mapping>
  
 </web-app>
