@@ -1,0 +1,7 @@
+let $ms:=doc("/movies/movies_alone.xml")/movies/movie
+let $as:=doc("/movies/artists_alone.xml")/artists/artist
+
+let $title:='#title'
+
+for $movies in $ms[contains(title, $title)]
+    return $movies
