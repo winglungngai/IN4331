@@ -1,0 +1,39 @@
+#TableOfContents
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 12px;
+	margin: 4px;
+	text-align: left;
+	border-collapse: collapse;
+}
+#TableOfContents th
+{
+	font-size: 13px;
+	font-weight: normal;
+	padding: 8px;
+	background: #b9c9fe url('gradhead.png') repeat-x;
+	border-top: 2px solid #d3ddff;
+	border-bottom: 1px solid #fff;
+	color: #039;
+        text-align: center;
+}
+#TableOfContents td
+{
+	padding: 8px; 
+	border-bottom: 1px solid #fff;
+	color: #669;
+	border-top: 1px solid #fff;
+	background: #e8edff url('gradback.png') repeat-x;
+}
+#TableOfContents tfoot tr td
+{
+	background: #e8edff;
+	font-size: 12px;
+	color: #99c;
+        text-align: center;
+}
+#TableOfContents tbody td:hover
+{
+	background: #d0dafd url('gradhover.png') repeat-x;
+	color: #339;
+}
