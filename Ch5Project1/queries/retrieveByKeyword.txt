@@ -1,6 +1,0 @@
-let $ms:=doc("/movies/movies_alone.xml")/movies/movie
-let $as:=doc("/movies/artists_alone.xml")/artists/artist
-
-let $keyword:='#keyword'
-
-return $ms[contains(summary, $keyword)]
