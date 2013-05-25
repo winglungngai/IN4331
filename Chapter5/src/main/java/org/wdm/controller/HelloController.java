@@ -3,6 +3,9 @@ package org.wdm.controller;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,12 +29,20 @@ public class HelloController {
     }
     
     @RequestMapping(value="/asyncCall", method=RequestMethod.POST )
-    public @ResponseBody List<String> handlePostRequest(
+    public HttpEntity<byte[]> handlePostRequest(
     		@RequestParam(value="title") String movieTitle, @RequestParam(value="genre") String genre) {
     	UserRequest uRequest = new UserRequest();
 		uRequest.setTitle(movieTitle);
 		uRequest.setGenre(genre);
+		
+		String xml = uRequest.retrieveMovie().get(0);
+
+	    byte[] documentBody = xml.getBytes();
+
+	    HttpHeaders header = new HttpHeaders();
+	    header.setContentType(new MediaType("application", "xml"));
+	    header.setContentLength(documentBody.length);
+	    return new HttpEntity<byte[]>(documentBody, header);
         
-        return uRequest.retrieveMovie();
     }
 }
