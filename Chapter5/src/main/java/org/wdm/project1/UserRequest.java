@@ -78,7 +78,7 @@ public class UserRequest {
 	 * Retrieve movies according to the specified criteria.
 	 */
 	@SuppressWarnings("unchecked")
-	public ArrayList<String> retrieveMovie()
+	public String retrieveMovie()
 	{
 		ArrayList<String> movies = new ArrayList<String>();
 		
@@ -107,7 +107,22 @@ public class UserRequest {
 				movies.retainAll(movieSet);
 			}
 		}
-		return movies;
+		return "<movies>" + toSingleXMLString(movies) + "</movies>";
+	}
+	
+	public boolean isRequested()
+	{
+		return (searchByTitle | searchByGenre | searchByDirectorName | searchByActorName | searchByTimeInterval | searchByKeyword) ;
+	}
+	
+	public String toSingleXMLString(ArrayList<String> xmlEntries)
+	{
+		String xmlString = "";
+		for(String xmlEntry : xmlEntries)
+		{
+			xmlString += xmlEntry;
+		}
+		return xmlString;
 	}
 
 }

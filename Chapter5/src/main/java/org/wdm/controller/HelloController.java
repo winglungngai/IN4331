@@ -1,6 +1,10 @@
 package org.wdm.controller;
 
+import java.text.NumberFormat;
+import java.text.ParsePosition;
 import java.util.List;
+
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter.DEFAULT;
 
 import org.apache.log4j.Logger;
 import org.springframework.http.HttpEntity;
@@ -12,37 +16,59 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.wdm.project1.UserRequest;
- 
+
 @Controller
 public class HelloController {
-    protected final Logger logger = Logger.getLogger(getClass());
- 
-    @RequestMapping(value="/ajax/asyncCall", method=RequestMethod.GET)
-    public @ResponseBody List<String> handleGetRequest() {
-    	
-    	UserRequest uRequest = new UserRequest();
+	protected final Logger logger = Logger.getLogger(getClass());
+
+	@RequestMapping(value = "/ajax/asyncCall", method = RequestMethod.GET)
+	public @ResponseBody
+	String handleGetRequest() {
+
+		UserRequest uRequest = new UserRequest();
 		uRequest.setActorName("Scarlett");
 		uRequest.setTimeInterval(2002, 2006);
 		uRequest.setTitle("Translation");
-        
-        return uRequest.retrieveMovie();
-    }
-    
-    @RequestMapping(value="/ajax/asyncCall", method=RequestMethod.POST )
-    public HttpEntity<byte[]> handlePostRequest(
-    		@RequestParam(value="title") String movieTitle, @RequestParam(value="genre") String genre) {
-    	UserRequest uRequest = new UserRequest();
-		uRequest.setTitle(movieTitle);
-		uRequest.setGenre(genre);
+
+		return uRequest.retrieveMovie();
+	}
+
+	@RequestMapping(value = "/ajax/asyncCall", method = RequestMethod.POST)
+	public HttpEntity<byte[]> handlePostRequest(
+			@RequestParam(value = "title", required=false) String title,
+			@RequestParam(value = "genre", required=false) String genre,
+			@RequestParam(value = "directorName", required=false) String directorName,
+			@RequestParam(value = "actorName", required=false) String actorName,
+			@RequestParam(value = "earliestYear", required=false) String earliestYear,
+			@RequestParam(value = "latestYear", required=false) String latestYear,
+			@RequestParam(value = "keyword", required=false) String keyword) {
+		UserRequest uRequest = new UserRequest();
+		if(title != null && title.length() > 0) { uRequest.setTitle(title);	}
+		if(genre != null && genre.length() > 0) { uRequest.setGenre(genre); }
+		if(directorName != null && directorName.length() > 0) { uRequest.setDirectorName(directorName); }
+		if(actorName != null && actorName.length() > 0) { uRequest.setActorName(actorName); }
+		if(earliestYear != null && isNumeric(earliestYear) && latestYear != null && isNumeric(latestYear) ) 
+		{ uRequest.setTimeInterval(Integer.parseInt(earliestYear), Integer.parseInt(latestYear)); }
+		if(keyword != null && keyword.length() > 0) { uRequest.setKeyword(keyword); }
 		
-		String xml = uRequest.retrieveMovie().get(0);
+		String xml = "";
+		if(uRequest.isRequested()) { xml = uRequest.retrieveMovie(); }
 
-	    byte[] documentBody = xml.getBytes();
+		byte[] documentBody = xml.getBytes();
 
-	    HttpHeaders header = new HttpHeaders();
-	    header.setContentType(new MediaType("application", "xml"));
-	    header.setContentLength(documentBody.length);
-	    return new HttpEntity<byte[]>(documentBody, header);
-        
-    }
+		HttpHeaders header = new HttpHeaders();
+		header.setContentType(new MediaType("application", "xml"));
+		header.setContentLength(documentBody.length);
+		return new HttpEntity<byte[]>(documentBody, header);
+
+	}
+	
+	public static boolean isNumeric(String str)
+	{
+	  if(str.length() == 0 ) return false;
+	  NumberFormat formatter = NumberFormat.getInstance();
+	  ParsePosition pos = new ParsePosition(0);
+	  formatter.parse(str, pos);
+	  return str.length() == pos.getIndex();
+	}
 }
