@@ -12,6 +12,9 @@
 			<xsl:for-each select="movies/movie">
 				<tr>
 					<td>
+						<xsl:value-of select="@id" />
+					</td>
+					<td>
 						<xsl:value-of select="title" />
 					</td>
 					<td>

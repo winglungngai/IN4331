@@ -1,0 +1,9 @@
+let $ms:=doc("/movies/movies_alone.xml")/movies/movie
+let $as:=doc("/movies/artists_alone.xml")/artists/artist
+
+for $movie at $pos in $ms
+  let $attr := $movie/@id
+  return
+    if (fn:not(exists($attr))) 
+        then (update insert attribute id {$pos} into $movie) 
+    else ()
