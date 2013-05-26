@@ -17,6 +17,9 @@
 					<td>
 						<xsl:value-of select="year" />
 					</td>
+					<td>
+						<xsl:value-of select="summary" />
+					</td>
 				</tr>
 			</xsl:for-each>
 		</tbody>
