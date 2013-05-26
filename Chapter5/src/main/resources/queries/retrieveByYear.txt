@@ -4,4 +4,4 @@ let $as:=doc("/movies/artists_alone.xml")/artists/artist
 let $earliest:=#earliest
 let $latest:=#latest
 
-return $ms[year>=$earliest and year<=$latest]
+return $ms[year>=$earliest and year<=$latest]/number(@id)

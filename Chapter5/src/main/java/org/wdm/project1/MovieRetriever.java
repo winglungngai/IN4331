@@ -119,6 +119,25 @@ public class MovieRetriever {
 		return xConnector.read(collectionPath, xQuery);
 	}
 	
+	public String retrieveById(String id)
+	{
+		String collectionPath = "/db/movies";
+		
+		String xQuery = XQueryFileReader.Read("queries/retrieveById.txt");
+		xQuery = xQuery.replace("#id", id);
+		 
+		ArrayList<String> moviesWithSameId = xConnector.read(collectionPath, xQuery);
+		if(moviesWithSameId.size() > 0)
+		{
+			return moviesWithSameId.get(0);
+		}
+		else
+		{
+			return null;
+		}
+		
+	}
+	
 	
 //	public ArrayList<Integer> retrieveByYear(int earliest, int latest)
 //	{

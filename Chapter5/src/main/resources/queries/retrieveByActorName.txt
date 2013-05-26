@@ -4,4 +4,4 @@ let $as:=doc("/movies/artists_alone.xml")/artists/artist
 let $actorName:='#actorName'
 
 let $actorId:=$as[contains(concat(first_name, ' ', last_name), $actorName)]/@id
-return $ms[actor/@id=$actorId]
+return $ms[actor/@id=$actorId]/number(@id)

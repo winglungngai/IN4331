@@ -1,0 +1,31 @@
+let $ms:=doc("/movies/movies_alone.xml")/movies/movie
+let $as:=doc("/movies/artists_alone.xml")/artists/artist
+
+let $id:='#id'
+
+for $movie in $ms[@id=$id]
+ let $director:=$as[@id= $movie/director/@id]
+    return 
+        <movie id="{$movie/@id}">
+            {$movie/title}
+            {$movie/year}
+            {$movie/country}
+            {$movie/genre}
+            {$movie/summary}
+            { <director id="{$movie/director/@id}"> 
+                {$director/first_name}
+                {$director/last_name}
+                {$director/birth_date}
+              </director>
+            }
+            {
+                for $a in $movie/actor
+                    let $actor:=$as[@id= $a/@id]
+                    return 
+                        <actor id="{$a/@id}">
+                        {$actor/first_name}
+                        {$actor/last_name}
+                        {$actor/birth_date}
+                        </actor>
+            }
+        </movie>

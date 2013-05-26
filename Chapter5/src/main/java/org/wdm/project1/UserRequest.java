@@ -77,8 +77,32 @@ public class UserRequest {
 	/**
 	 * Retrieve movies according to the specified criteria.
 	 */
-	@SuppressWarnings("unchecked")
 	public String retrieveMovie()
+	{
+		String xmlString = "<movies>";
+		ArrayList<String> movieIds = retrieveMovieIds();
+		
+		XMLDatabaseConnector xConnector = new XMLDatabaseConnector();
+		MovieRetriever mRetriever = new MovieRetriever(xConnector);
+		
+		for(String movieId : movieIds)
+		{
+			String movie = mRetriever.retrieveById(movieId);
+			if(movie != null)
+			{
+				xmlString += movie;
+			}
+		}
+		
+		xmlString += "</movies>";
+		return xmlString;
+	}
+	
+	/**
+	 * Retrieve movies according to the specified criteria.
+	 */
+	@SuppressWarnings("unchecked")
+	public ArrayList<String> retrieveMovieIds()
 	{
 		ArrayList<String> movies = new ArrayList<String>();
 		
@@ -107,7 +131,8 @@ public class UserRequest {
 				movies.retainAll(movieSet);
 			}
 		}
-		return "<movies>" + toSingleXMLString(movies) + "</movies>";
+		
+		return movies;
 	}
 	
 	public boolean isRequested()
