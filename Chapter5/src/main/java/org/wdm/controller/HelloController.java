@@ -21,7 +21,7 @@ import org.wdm.project1.UserRequest;
 public class HelloController {
 	protected final Logger logger = Logger.getLogger(getClass());
 
-	@RequestMapping(value = "/ajax/asyncCall", method = RequestMethod.GET)
+	@RequestMapping(value = "ajax/asyncCall", method = RequestMethod.GET)
 	public @ResponseBody
 	String handleGetRequest() {
 
@@ -33,7 +33,7 @@ public class HelloController {
 		return uRequest.retrieveMovies();
 	}
 
-	@RequestMapping(value = "/ajax/asyncCall", method = RequestMethod.POST)
+	@RequestMapping(value = "ajax/asyncCall", method = RequestMethod.POST)
 	public HttpEntity<byte[]> handlePostRequest(
 			@RequestParam(value = "title", required=false) String title,
 			@RequestParam(value = "genre", required=false) String genre,

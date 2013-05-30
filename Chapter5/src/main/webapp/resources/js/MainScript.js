@@ -49,7 +49,7 @@ function retrieveMovieData() {
 		latestYear : $("#LatestYear").val(),
 		keyword : $("#Keyword").val()
 	}, function(xml) {
-		$.get("movies.xsl", function(xsl) {
+		$.get("resources/xslt/movies.xsl", function(xsl) {
 			xsltProcessor = new XSLTProcessor();
 			xsltProcessor.importStylesheet(xsl);
 			resultDocument = xsltProcessor.transformToFragment(xml, document);
