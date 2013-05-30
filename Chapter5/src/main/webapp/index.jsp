@@ -4,14 +4,13 @@
         <style type="text/css">
             @import url("resources/css/style.css");
          </style>
-        <title>Movie Search Engine</title>
+        <title>Chapter5</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
-        <div id="SearchField"></div>
-        <div id="EditField"></div>
-        <!-- <script src="resources/js/yui-min.js"></script>-->
-        <script src="resources/js/MainScript.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    	<h1>Chapter 5 Projects</h1>
+        <a href="project1.jsp">Project 1</a>
+        <a href="project2.jsp">Project 2</a>
+        <a href="project3.jsp">Project 3</a>
     </body>
 </html>
