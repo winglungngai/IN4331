@@ -1,0 +1,2 @@
+let $pc:=collection("/shakespeare/?*.xml")[PLAY/TITLE/text()='#play']
+return $pc/PLAY/ACT/TITLE

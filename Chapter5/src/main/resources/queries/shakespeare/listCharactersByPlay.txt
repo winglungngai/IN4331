@@ -1,0 +1,4 @@
+let $play:=collection("/shakespeare/?*.xml")/PLAY[TITLE/text()='#play']
+let $speakers:= distinct-values($play/ACT/SCENE/SPEECH/SPEAKER)
+for $speaker in $speakers 
+return <SPEAKER>{$speaker}</SPEAKER>

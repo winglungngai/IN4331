@@ -1,8 +1,5 @@
 package org.wdm.util;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 

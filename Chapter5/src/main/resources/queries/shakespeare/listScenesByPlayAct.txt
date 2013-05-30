@@ -1,0 +1,5 @@
+let $pc:=collection("/shakespeare/?*.xml")[PLAY/TITLE/text()='#play']
+let $scenes:=if(string-length('#act')>0) then $pc/PLAY/ACT[TITLE/text()='#act']/SCENE
+else $pc/PLAY/ACT/SCENE
+for $scene in $scenes
+   return <SCENE>{$scene/TITLE}</SCENE>

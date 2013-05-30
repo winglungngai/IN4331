@@ -4,7 +4,6 @@
 <head>
 <title>Web Data Management - Chapter 5</title>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="resources/js/hello.js"></script>
 <script>
 	var xmlDoc = null;
 	var xslDoc = null;
@@ -29,7 +28,7 @@
 				xmlDoc = data;
 			});
 
-			$.get("resources/xsl/play.xsl", function(data) {
+			$.get("resources/xslt/play.xsl", function(data) {
 				xslDoc = data;
 			});
 	});
