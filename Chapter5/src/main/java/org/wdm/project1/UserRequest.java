@@ -2,6 +2,7 @@ package org.wdm.project1;
 import java.util.ArrayList;
 
 import org.wdm.util.XMLDatabaseConnector;
+import org.wdm.util.XQueryFileReader;
 
 /**
  * UserRequest specifies the user's search criteria and uses those to search in the XMLDatabase.
@@ -33,7 +34,7 @@ public class UserRequest {
 		uRequest.setActorName("Scarlett");
 		uRequest.setTimeInterval(2002, 2006);
 		uRequest.setTitle("Translation");
-		System.out.println(uRequest.retrieveMovie());
+		System.out.println(uRequest.retrieveMovies());
 	
 	}
 	
@@ -77,62 +78,47 @@ public class UserRequest {
 	/**
 	 * Retrieve movies according to the specified criteria.
 	 */
-	public String retrieveMovie()
-	{
-		String xmlString = "<movies>";
-		ArrayList<String> movieIds = retrieveMovieIds();
-		
-		XMLDatabaseConnector xConnector = new XMLDatabaseConnector();
-		MovieRetriever mRetriever = new MovieRetriever(xConnector);
-		
-		for(String movieId : movieIds)
-		{
-			String movie = mRetriever.retrieveById(movieId);
-			if(movie != null)
-			{
-				xmlString += movie;
-			}
-		}
-		
-		xmlString += "</movies>";
-		return xmlString;
-	}
+//	public String retrieveMovie()
+//	{
+//		String xmlString = "<movies>";
+//		ArrayList<String> movieIds = retrieveMovieIds();
+//		
+//		XMLDatabaseConnector xConnector = new XMLDatabaseConnector();
+//		MovieRetriever mRetriever = new MovieRetriever(xConnector);
+//		
+//		for(String movieId : movieIds)
+//		{
+//			String movie = mRetriever.retrieveById(movieId);
+//			if(movie != null)
+//			{
+//				xmlString += movie;
+//			}
+//		}
+//		
+//		xmlString += "</movies>";
+//		return xmlString;
+//	}
 	
 	/**
 	 * Retrieve movies according to the specified criteria.
 	 */
 	@SuppressWarnings("unchecked")
-	public ArrayList<String> retrieveMovieIds()
+	public String retrieveMovies()
 	{
-		ArrayList<String> movies = new ArrayList<String>();
-		
 		XMLDatabaseConnector xConnector = new XMLDatabaseConnector();
-		MovieRetriever mRetriever = new MovieRetriever(xConnector);
-		ArrayList<ArrayList<String>> movieBigSet = new ArrayList<ArrayList<String>>();
+		String collectionPath = "/db/movies";
+		String xQuery = XQueryFileReader.Read("queries/retrieveMovies.txt");
 		
-		if(searchByTitle)
-			movieBigSet.add(mRetriever.retrieveByTitle(title));
-		if(searchByGenre)
-			movieBigSet.add(mRetriever.retrieveByGenre(genre));
-		if(searchByDirectorName)
-			movieBigSet.add(mRetriever.retrieveByDirectorName(directorName));
-		if(searchByActorName)
-			movieBigSet.add(mRetriever.retrieveByActorName(actorName));
-		if(searchByTimeInterval)
-			movieBigSet.add(mRetriever.retrieveByYear(earliestYear, latestYear));
-		if(searchByKeyword)
-			movieBigSet.add(mRetriever.retrieveByKeyword(keyword));
+		xQuery = (searchByGenre) ?  xQuery.replace("#genre", genre) : xQuery.replace("#genre", "");
+		xQuery = (searchByActorName) ?  xQuery.replace("#actorName", actorName) : xQuery.replace("#actorName", "");
+		xQuery = (searchByDirectorName) ?  xQuery.replace("#directorName", directorName) : xQuery.replace("#directorName", "");
+		xQuery = (searchByKeyword) ?  xQuery.replace("#keyword", keyword) : xQuery.replace("#keyword", "");
+		xQuery = (searchByTitle) ?  xQuery.replace("#title", title) : xQuery.replace("#title", "");
+		xQuery = (searchByTimeInterval) ?  xQuery.replace("#earliest", Integer.valueOf(earliestYear).toString()) : xQuery.replace("#earliest", "");
+		xQuery = (searchByTimeInterval) ?  xQuery.replace("#latest", Integer.valueOf(latestYear).toString()) : xQuery.replace("#latest", "");
 		
-		if(movieBigSet.size() > 0)
-		{
-			movies = (ArrayList<String>) movieBigSet.get(0).clone();
-			for(ArrayList<String> movieSet : movieBigSet)
-			{
-				movies.retainAll(movieSet);
-			}
-		}
-		
-		return movies;
+		ArrayList<String> results = xConnector.read(collectionPath, xQuery);
+		return "<movies>" + results + "</movies>";
 	}
 	
 	public boolean isRequested()

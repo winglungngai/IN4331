@@ -30,7 +30,7 @@ public class HelloController {
 		uRequest.setTimeInterval(2002, 2006);
 		uRequest.setTitle("Translation");
 
-		return uRequest.retrieveMovie();
+		return uRequest.retrieveMovies();
 	}
 
 	@RequestMapping(value = "/ajax/asyncCall", method = RequestMethod.POST)
@@ -52,7 +52,7 @@ public class HelloController {
 		if(keyword != null && keyword.length() > 0) { uRequest.setKeyword(keyword); }
 		
 		String xml = "";
-		if(uRequest.isRequested()) { xml = uRequest.retrieveMovie(); }
+		if(uRequest.isRequested()) { xml = uRequest.retrieveMovies(); }
 
 		byte[] documentBody = xml.getBytes();
 

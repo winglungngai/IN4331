@@ -1,0 +1,25 @@
+let $ms:=doc("/movies/movies_alone.xml")/movies/movie
+let $as:=doc("/movies/artists_alone.xml")/artists/artist
+
+let $genre:='#genre'
+let $actorName:='#actorName'
+let $directorName:='#directorName'
+let $keyword:='#keyword'
+let $title:='#title'
+let $earliest:='#earliest'
+let $latest:='#latest'
+
+let $moviesByGenre:=for $movies in $ms[genre=$genre] where (($genre)) return $movies
+
+for $movie in $ms where   
+    (if($actorName) then 
+        $movie/actor/@id=$as[contains(concat(first_name, ' ', last_name), $actorName)]/@id else(true())) and
+    (if($directorName) then 
+        $movie/director/@id=$as[contains(concat(first_name, ' ', last_name), $directorName)]/@id else(true())) and
+    (if($genre) then $movie[genre=$genre] else(true())) and
+    (if($keyword) then $movie[contains(summary, $keyword)] else(true())) and
+    (if($title) then $movie[contains(title, $title)] else(true())) and
+    (if($earliest and $latest) then $movie[year>=$earliest and year<=$latest] else(true())) and
+    (if (($actorName) or ($directorName) or ($genre) or 
+        ($keyword) or ($earliest and $latest) or ($title)) then true() else(not(true())))
+    return $movie
