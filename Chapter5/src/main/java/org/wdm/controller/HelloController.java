@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.wdm.project1.UserRequest;
+import org.wdm.project3.MusicXMLRetriever;
+import org.wdm.util.XMLDatabaseConnector;
 
 @Controller
 public class HelloController {
@@ -58,6 +60,27 @@ public class HelloController {
 
 		HttpHeaders header = new HttpHeaders();
 		header.setContentType(new MediaType("application", "xml"));
+		header.setContentLength(documentBody.length);
+		return new HttpEntity<byte[]>(documentBody, header);
+
+	}
+	
+	@RequestMapping(value = "ajax/DownloadMusicXMLFile.xml", method = RequestMethod.GET)
+	public HttpEntity<byte[]> handleMusicXMLRequest(
+			@RequestParam(value = "fileName", required=false) String fileName) {
+		
+		XMLDatabaseConnector xConnector = new XMLDatabaseConnector();
+		MusicXMLRetriever mRetriever = new MusicXMLRetriever(xConnector);
+		
+		String xml = "";
+		xml = mRetriever.retrieveByFileName("Heat");
+
+		byte[] documentBody = xml.getBytes();
+
+		HttpHeaders header = new HttpHeaders();
+		header.add("Pragma", "cache");
+		header.setContentType(new MediaType("application", "xml"));
+		header.setContentDispositionFormData("attachment", "DownloadMusicXMLFile.xml");
 		header.setContentLength(documentBody.length);
 		return new HttpEntity<byte[]>(documentBody, header);
 

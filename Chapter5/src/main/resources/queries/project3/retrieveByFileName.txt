@@ -1,0 +1,2 @@
+let $music:=doc("/music/titanic.xml")
+return $music
