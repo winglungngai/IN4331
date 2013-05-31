@@ -1,7 +1,13 @@
 package org.wdm.util;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Vector;
 
+import org.apache.xmlrpc.XmlRpcException;
+import org.apache.xmlrpc.client.XmlRpcClient;
+import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import org.exist.xmldb.XQueryService;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
@@ -25,10 +31,8 @@ public class XMLDatabaseConnector {
 	 */
 	public static void main(String[] args) throws Exception {
 		XMLDatabaseConnector xConnector = new XMLDatabaseConnector();
-		String collectionPath = "/db/movies";
-		String xQuery = "for $x in doc('/movies/movies.xml')//title " + "return data($x)";
-		ArrayList<String> resultSet = xConnector.read(collectionPath, xQuery);
-		System.out.println(resultSet.toString());
+		String collectionPath = "/db/music";
+		xConnector.upload(collectionPath, "ohmygod3", "<omg></omg>");
 	}
 
 	/**
@@ -82,6 +86,43 @@ public class XMLDatabaseConnector {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	/**
+	 * Upload files to database
+	 */
+	public boolean upload(String collectionPath, String docName, String xml)
+	{
+		boolean succeeded = false;
+        try {
+	        	
+			String uri = "http://localhost:8080/exist/xmlrpc";
+			 
+	        XmlRpcClient client = new XmlRpcClient();
+	        XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
+	
+			config.setServerURL(new URL(uri));
+	        config.setBasicUserName("admin");
+	        config.setBasicPassword("admin");
+	        client.setConfig(config);
+	        
+			// set parameters for XML-RPC call
+			Vector<Object> params = new Vector<Object>();
+			params.addElement(xml);
+			params.addElement(collectionPath + "/" + docName);
+			params.addElement(new Integer(1));
+	
+			// execute the call
+			succeeded = (Boolean)client.execute("parse", params);
+		
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (XmlRpcException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        return succeeded;
 	}
 	
 	/**
