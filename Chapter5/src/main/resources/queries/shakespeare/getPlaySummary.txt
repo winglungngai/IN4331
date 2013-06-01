@@ -1,0 +1,19 @@
+declare function local:getCharacters($startNode as element()){
+    let $characters:=distinct-values($startNode/descendant-or-self::SPEAKER)
+    for $character in $characters
+    return if(string-length($character)=0) then() else <SPEAKER>{$character}</SPEAKER>
+};
+
+let $play:=collection("/shakespeare/?*.xml")[PLAY/TITLE/text()='#play']/PLAY
+for $act in $play/ACT
+return <ACT>
+			{$act/TITLE}
+		    {
+            for $scene in $act/SCENE
+                return
+                    <SCENE>
+                        {$scene/TITLE}
+    			        {local:getCharacters($scene)}
+                    </SCENE>
+            }
+		</ACT>

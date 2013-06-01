@@ -1,0 +1,2 @@
+let $scene:=collection("/shakespeare/?*.xml")[PLAY/TITLE/text()='#play']/PLAY/ACT[TITLE='#act']/SCENE[contains(TITLE,'#scene')]
+return $scene

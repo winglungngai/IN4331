@@ -1,0 +1,9 @@
+let $play:=collection("/shakespeare/?*.xml")[PLAY/TITLE/text()='#play']/PLAY
+return <PLAY>
+        {$play/TITLE}
+        {$play/PERSONAE}
+        {$play/SCNDESCR}
+        {$play/PLAYSUBT}
+        <ACT_NO>{count($play/ACT)}</ACT_NO>
+        <SCENE_NO>{count($play/descendant::SCENE)}</SCENE_NO>
+    </PLAY>
