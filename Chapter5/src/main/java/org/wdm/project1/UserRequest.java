@@ -118,7 +118,10 @@ public class UserRequest {
 		xQuery = (searchByTimeInterval) ?  xQuery.replace("#latest", Integer.valueOf(latestYear).toString()) : xQuery.replace("#latest", "");
 		
 		ArrayList<String> results = xConnector.read(collectionPath, xQuery);
-		return "<movies>" + results + "</movies>";
+		StringBuffer sb = new StringBuffer("<movies>");
+		for(String result:results) sb.append(result);
+		sb.append("</movies>");
+		return sb.toString();
 	}
 	
 	public boolean isRequested()

@@ -47,7 +47,7 @@ function initResultField()
 function setResultFieldBody()
 {
     var bodyHTMLCode = "";
-    bodyHTMLCode += "<table id=\"TableOfContents\" width=\"250\" summary=\"ChaptersOverview\"></table>";
+    bodyHTMLCode += "<table class=\"TableOfContents\" id=\"TableOfContents\" width=\"250\" summary=\"ChaptersOverview\"></table>";
     bodyHTMLCode += "<span id=\"SearchStatus\">waiting for search results....</span>";
     document.getElementById("EditField").innerHTML = bodyHTMLCode;
 }
