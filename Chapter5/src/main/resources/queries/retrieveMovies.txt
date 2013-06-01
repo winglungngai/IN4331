@@ -19,7 +19,7 @@ for $movie in $ms where
     (if($genre) then $movie[genre=$genre] else(true())) and
     (if($keyword) then $movie[contains(summary, $keyword)] else(true())) and
     (if($title) then $movie[contains(title, $title)] else(true())) and
-    (if($earliest and $latest) then $movie[year>=$earliest and year<=$latest] else(true())) and
+    (if($earliest and $latest) then $movie[year>=number($earliest) and year<=number($latest)] else(true())) and
     (if (($actorName) or ($directorName) or ($genre) or 
         ($keyword) or ($earliest and $latest) or ($title)) then true() else(not(true())))
     return $movie
