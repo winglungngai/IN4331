@@ -1,4 +1,4 @@
-declare function local:order-value($act as element(ACT)*, $scene as xs:string, $speaker as xs:string){
+declare function local:getSpeechByActSpeaker($act as element(ACT)*, $scene as xs:string, $speaker as xs:string){
    let $scenes:=if(string-length($scene)>0) then $act/SCENE[TITLE=$scene and SPEECH[SPEAKER=$speaker]] else $act/SCENE[SPEECH[SPEAKER=$speaker]]
     for $scene in $scenes
     return
@@ -15,4 +15,7 @@ declare function local:order-value($act as element(ACT)*, $scene as xs:string, $
 let $pc:=collection("/shakespeare/?*.xml")[PLAY/TITLE/text()='#play']
 let $acts:=if(string-length('#act')>0) then $pc/PLAY/ACT[TITLE='#act'] else $pc/PLAY/ACT
 for $act in $acts
-return local:order-value($act, '#scene', '#speaker')
+return <ACT>
+			{$act/TITLE}
+			{local:getSpeechByActSpeaker($act, '#scene', '#speaker')}
+		</ACT>

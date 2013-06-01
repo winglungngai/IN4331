@@ -94,6 +94,36 @@ public class PlayRetriever {
 		return  sb.toString();
 	}
 	
+	public String listScenesByPlay(String play){
+		String xQuery = XQueryFileReader.Read("queries/shakespeare/listScenesByPlay.txt");
+		xQuery = xQuery.replace("#play", play);
+		List<String> results = xConnector.read(COLLECTION_PATH, xQuery);
+		StringBuffer sb = new StringBuffer("<items>");
+		for(String result:results) sb.append(result);
+		sb.append("</items>");
+		return  sb.toString();
+	}
+	
+	public String getPlaySumary(String play){
+		String xQuery = XQueryFileReader.Read("queries/shakespeare/getPlaySummary.txt");
+		xQuery = xQuery.replace("#play", play);
+		List<String> results = xConnector.read(COLLECTION_PATH, xQuery);
+		StringBuffer sb = new StringBuffer("<items>");
+		sb.append("<TITLE>").append(play).append("</TITLE>");
+		for(String result:results) sb.append(result);
+		sb.append("</items>");
+		return  sb.toString();
+	}
+	
+	public String getPlayDetails(String play){
+		String xQuery = XQueryFileReader.Read("queries/shakespeare/getPlayDetails.txt");
+		xQuery = xQuery.replace("#play", play);
+		List<String> results = xConnector.read(COLLECTION_PATH, xQuery);
+		StringBuffer sb = new StringBuffer();
+		for(String result:results) sb.append(result);
+		return  sb.toString();
+	}
+	
 	public String getPartByCharacterActScene(String play, String act, String scene, String speaker){
 		if(play==null && speaker==null || play.trim().length()==0 || speaker.trim().length()==0) throw new IllegalArgumentException("play and speaker parameters cannot be null or empty.");
 		//if((act==null && scene==null) || (act.trim().length()==0 && scene.trim().length()==0)) throw new IllegalArgumentException("act and scene parameters cannot both be null or empty.");
@@ -107,6 +137,20 @@ public class PlayRetriever {
 		xQuery = xQuery.replace("#speaker", speaker);
 		List<String> results = xConnector.read(COLLECTION_PATH, xQuery);
 		StringBuffer sb = new StringBuffer("<items>");
+		sb.append("<PLAY>").append(play).append("</PLAY>");
+		for(String result:results) sb.append(result);
+		sb.append("</items>");
+		return  sb.toString();
+	}
+	
+	public String getSceneByPlayActTitle(String play, String act, String scene){
+		String xQuery = XQueryFileReader.Read("queries/shakespeare/getSceneByPlayActTitle.txt");
+		xQuery = xQuery.replace("#play", play);
+		xQuery = xQuery.replace("#act", act);
+		xQuery = xQuery.replace("#scene", scene);
+		List<String> results = xConnector.read(COLLECTION_PATH, xQuery);
+		StringBuffer sb = new StringBuffer("<items>");
+		sb.append("<PLAY>").append(play).append("</PLAY>");
 		for(String result:results) sb.append(result);
 		sb.append("</items>");
 		return  sb.toString();
