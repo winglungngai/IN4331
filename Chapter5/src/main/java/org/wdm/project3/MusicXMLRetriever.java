@@ -32,7 +32,7 @@ public class MusicXMLRetriever {
 		String collectionPath = "/db/music";
 		
 		String xQuery = XQueryFileReader.Read("queries/project3/retrieveByFileName.txt");
-		//xQuery = xQuery.replace("#id", id);
+		xQuery = xQuery.replace("#fileName", fileName);
 		 
 		ArrayList<String> moviesWithSameId = xConnector.read(collectionPath, xQuery);
 		if(moviesWithSameId.size() > 0)
@@ -44,6 +44,27 @@ public class MusicXMLRetriever {
 			return null;
 		}
 		
+	}
+	
+	/*
+	 * Retrieve songs information by credit words
+	 */
+	public String retrieveByCreditWords(String creditWords)
+	{
+		String collectionPath = "/db/music";
+		
+		String xQuery = XQueryFileReader.Read("queries/project3/retrieveByCreditWords.txt");
+		xQuery = xQuery.replace("#creditWords", creditWords);
+		 
+		ArrayList<String> moviesWithSameId = xConnector.read(collectionPath, xQuery);
+		if(moviesWithSameId.size() > 0)
+		{
+			return moviesWithSameId.get(0);
+		}
+		else
+		{
+			return null;
+		}
 	}
 	
 	

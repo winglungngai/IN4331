@@ -1,2 +1,2 @@
-let $music:=doc("/music/titanic.xml")
+let $music:=doc("/music/#fileName")
 return $music

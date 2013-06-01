@@ -3,6 +3,27 @@ var movies = "";
 
 initSearchField();
 
+function displayMusicFile(fileName)
+{
+	 var bodyHTMLCode = "";
+	 bodyHTMLCode += "<object classid=\"CLSID:07000E2B-6AAD-497D-8E5B-5976560AD429\" border=\"0\" height=\"650\" width=\"900\">"
+		 bodyHTMLCode += "<param name=\"src\" value=\"mymusic.mus\" />"
+		 bodyHTMLCode += "<param name=\"width\" value=\"300\" />"
+		 bodyHTMLCode += "<param name=\"height\" value=\"400\" />"
+		 bodyHTMLCode += "<param name=\"type\" value=\"application/x-myriad-music\" />"
+		 bodyHTMLCode += "<param name=\"pluginspage\" value=\"http://www.myriad-online.com/cgi-bin/mmplug.pl\" />"
+		 bodyHTMLCode += "<embed src=\"ajax/DownloadMusicXMLFile.xml?fileName=" + fileName + "\""
+		 bodyHTMLCode += "width=600 height=450 type=\"application/x-myriad-music\" AUTOPLAY=ON"
+		 bodyHTMLCode += "COLOR_THEME=SNOWBAL TITLE=OFF MIXER=OFF TEMPO=OFF PRINT=OFF SAVE=OFF"
+		 bodyHTMLCode += "ZOOM=OFF TRANSP=OFF DOCINFO=OFF FORWARD=OFF BACKWARD=OFF STOP=OFF"
+		 bodyHTMLCode += "CHANGE_VOLUME=OFF FULLSCREEN=OFF DISPLAY_METRONOME=OFF"
+		 bodyHTMLCode += "ALLOW_VIEWS=OFF SING=OFF TWO_PAGES=ON"
+		 bodyHTMLCode += "pluginspage=\"http://www.myriad-online.com/cgi-bin/mmplug.pl\">"
+		 bodyHTMLCode += "</embed>"
+		 bodyHTMLCode += "</object>"
+	$('#content').empty().append(bodyHTMLCode);
+}
+
 function initSearchField()
 {
     setSearchFieldBody();
@@ -11,16 +32,8 @@ function initSearchField()
 function setSearchFieldBody()
 {
     var bodyHTMLCode = "";
-    bodyHTMLCode += "<h3>Find a movie by any of the following criteria's: </h3>";
-    bodyHTMLCode += "<button id=\"SearchButton\" onclick=\"initResultField()  \">Search</button>";
-    bodyHTMLCode += "<br>";
-    bodyHTMLCode += "<input id=\"Title\" type=\"text\" size=\"25\" placeholder=\"Title\">";
-    bodyHTMLCode += "<input id=\"Genre\" type=\"text\" size=\"25\" placeholder=\"Genre\">";
-    bodyHTMLCode += "<input id=\"DirectorName\" type=\"text\" size=\"25\" placeholder=\"Director\">";
-    bodyHTMLCode += "<input id=\"ActorName\" type=\"text\" size=\"25\" placeholder=\"Actor\">" + "<br>";
-    bodyHTMLCode += "<input id=\"EarliestYear\" type=\"text\" size=\"25\" placeholder=\"From ? Year - \">";
-    bodyHTMLCode += "<input id=\"LatestYear\" type=\"text\" size=\"25\" placeholder=\"Til ? Year\">";
-    bodyHTMLCode += "<input id=\"Keyword\" type=\"text\" size=\"25\" placeholder=\"Keyword in Summary\">";
+    bodyHTMLCode += "<input id=\"KeywordField\" type=\"text\" size=\"25\" placeholder=\"Find Music\">";
+    bodyHTMLCode += "<button id=\"SearchButton\" onclick=\"initResultField()  \">Find</button>";
     
     document.getElementById("SearchField").innerHTML = bodyHTMLCode;
 }
@@ -34,22 +47,16 @@ function initResultField()
 function setResultFieldBody()
 {
     var bodyHTMLCode = "";
-    bodyHTMLCode += "<table id=\"TableOfContents\" summary=\"ChaptersOverview\"></table>";
+    bodyHTMLCode += "<table id=\"TableOfContents\" width=\"250\" summary=\"ChaptersOverview\"></table>";
     bodyHTMLCode += "<span id=\"SearchStatus\">waiting for search results....</span>";
     document.getElementById("EditField").innerHTML = bodyHTMLCode;
 }
 
 function retrieveMovieData() {
-	$.post("ajax/asyncCall", {
-		title : $("#Title").val(),
-		genre : $("#Genre").val(),
-		directorName : $("#DirectorName").val(),
-		actorName : $("#ActorName").val(),
-		earliestYear : $("#EarliestYear").val(),
-		latestYear : $("#LatestYear").val(),
-		keyword : $("#Keyword").val()
+	$.post("ajax/SearchMusic", {
+		creditWords : $("#KeywordField").val()
 	}, function(xml) {
-		$.get("resources/xslt/movies.xsl", function(xsl) {
+		$.get("resources/xslt/music.xsl", function(xsl) {
 			xsltProcessor = new XSLTProcessor();
 			xsltProcessor.importStylesheet(xsl);
 			resultDocument = xsltProcessor.transformToFragment(xml, document);
@@ -67,7 +74,6 @@ function setSearchStatus()
     document.getElementById("SearchStatus").innerHTML = searchStatus;
 
 }
-
 
 
 

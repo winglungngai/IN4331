@@ -73,7 +73,7 @@ public class HelloController {
 		MusicXMLRetriever mRetriever = new MusicXMLRetriever(xConnector);
 		
 		String xml = "";
-		xml = mRetriever.retrieveByFileName("Heat");
+		xml = mRetriever.retrieveByFileName(fileName);
 
 		byte[] documentBody = xml.getBytes();
 
@@ -83,7 +83,24 @@ public class HelloController {
 		header.setContentDispositionFormData("attachment", "DownloadMusicXMLFile.xml");
 		header.setContentLength(documentBody.length);
 		return new HttpEntity<byte[]>(documentBody, header);
+	}
+	
+	@RequestMapping(value = "ajax/SearchMusic", method = RequestMethod.POST)
+	public HttpEntity<byte[]> handleMusicSearchRequest(
+			@RequestParam(value = "creditWords") String creditWords) {
+		
+		XMLDatabaseConnector xConnector = new XMLDatabaseConnector();
+		MusicXMLRetriever mRetriever = new MusicXMLRetriever(xConnector);
+		
+		String xml = "";
+		xml = mRetriever.retrieveByCreditWords(creditWords);
 
+		byte[] documentBody = xml.getBytes();
+
+		HttpHeaders header = new HttpHeaders();
+		header.setContentType(new MediaType("application", "xml"));
+		header.setContentLength(documentBody.length);
+		return new HttpEntity<byte[]>(documentBody, header);
 	}
 	
 	public static boolean isNumeric(String str)

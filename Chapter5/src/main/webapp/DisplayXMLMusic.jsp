@@ -12,7 +12,7 @@
 		<param name="type" value="application/x-myriad-music" />
 		<param name="pluginspage"
 			value="http://www.myriad-online.com/cgi-bin/mmplug.pl" />
-		<embed src="ajax/DownloadMusicXMLFile.xml"
+		<embed src="ajax/DownloadMusicXMLFile.xml?fileName=comptine.xml"
 			width=900 height=650 type="application/x-myriad-music" AUTOPLAY=ON
 			COLOR_THEME=SNOWBAL TITLE=OFF MIXER=OFF TEMPO=OFF PRINT=OFF SAVE=OFF
 			ZOOM=OFF TRANSP=OFF DOCINFO=OFF FORWARD=OFF BACKWARD=OFF STOP=OFF

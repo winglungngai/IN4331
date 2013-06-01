@@ -1,0 +1,24 @@
+let $docs:=collection("/music/?*.xml")
+let $keyword:='#creditWords'
+
+let $song-files:=distinct-values( 
+    for $doc in $docs
+        for $credit-words in $doc/score-partwise/credit/credit-words
+        where (contains(lower-case($credit-words), lower-case($keyword)))
+        return util:document-name($doc)
+    )
+
+return 
+    <songs>
+        {for $song in $song-files
+            let $credits:=doc(concat('/music/', $song))/score-partwise/credit/credit-words
+            return
+                <song>
+                    <fileName>
+                        { string($song)} 
+                    </fileName> 
+                    {for $creditss in $credits
+                        order by $creditss/@justify
+                        return  <credit> { string($creditss)} </credit> }
+                </song> }
+    </songs>
