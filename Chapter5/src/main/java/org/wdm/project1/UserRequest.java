@@ -107,7 +107,7 @@ public class UserRequest {
 	{
 		XMLDatabaseConnector xConnector = new XMLDatabaseConnector();
 		String collectionPath = "/db/movies";
-		String xQuery = XQueryFileReader.Read("queries/retrieveMovies.txt");
+		String xQuery = XQueryFileReader.Read("queries/project1/retrieveMovies.txt");
 		
 		xQuery = (searchByGenre) ?  xQuery.replace("#genre", genre) : xQuery.replace("#genre", "");
 		xQuery = (searchByActorName) ?  xQuery.replace("#actorName", actorName) : xQuery.replace("#actorName", "");

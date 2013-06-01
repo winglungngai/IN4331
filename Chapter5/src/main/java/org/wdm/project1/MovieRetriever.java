@@ -46,7 +46,7 @@ public class MovieRetriever {
 	public ArrayList<String> retrieveByTitle(String title)
 	{
 		String collectionPath = "/db/movies";
-		String xQuery = XQueryFileReader.Read("queries/retrieveByTitle.txt");
+		String xQuery = XQueryFileReader.Read("queries/project1/retrieveByTitle.txt");
 		xQuery = xQuery.replace("#title", title);
 		
 		return xConnector.read(collectionPath, xQuery);
@@ -59,7 +59,7 @@ public class MovieRetriever {
 	{
 		String collectionPath = "/db/movies";
 		
-		String xQuery = XQueryFileReader.Read("queries/retrieveByGenre.txt");
+		String xQuery = XQueryFileReader.Read("queries/project1/retrieveByGenre.txt");
 		xQuery = xQuery.replace("#genre", genre);
 		
 		return xConnector.read(collectionPath, xQuery);
@@ -73,7 +73,7 @@ public class MovieRetriever {
 	{
 		String collectionPath = "/db/movies";
 		
-		String xQuery = XQueryFileReader.Read("queries/retrieveByDirectorName.txt");
+		String xQuery = XQueryFileReader.Read("queries/project1/retrieveByDirectorName.txt");
 		xQuery = xQuery.replace("#directorName", directorName);
 		
 		return xConnector.read(collectionPath, xQuery);
@@ -86,7 +86,7 @@ public class MovieRetriever {
 	{
 		String collectionPath = "/db/movies";
 		
-		String xQuery = XQueryFileReader.Read("queries/retrieveByActorName.txt");
+		String xQuery = XQueryFileReader.Read("queries/project1/retrieveByActorName.txt");
 		xQuery = xQuery.replace("#actorName", actorName);
 		
 		return xConnector.read(collectionPath, xQuery);
@@ -99,7 +99,7 @@ public class MovieRetriever {
 	{
 		String collectionPath = "/db/movies";
 		
-		String xQuery = XQueryFileReader.Read("queries/retrieveByYear.txt");
+		String xQuery = XQueryFileReader.Read("queries/project1/retrieveByYear.txt");
 		xQuery = xQuery.replace("#earliest", Integer.valueOf(earliest).toString());
 		xQuery = xQuery.replace("#latest", Integer.valueOf(latest).toString());
 		
@@ -113,7 +113,7 @@ public class MovieRetriever {
 	{
 		String collectionPath = "/db/movies";
 		
-		String xQuery = XQueryFileReader.Read("queries/retrieveByKeyword.txt");
+		String xQuery = XQueryFileReader.Read("queries/project1/retrieveByKeyword.txt");
 		xQuery = xQuery.replace("#keyword", keyword);
 		 
 		return xConnector.read(collectionPath, xQuery);
@@ -123,7 +123,7 @@ public class MovieRetriever {
 	{
 		String collectionPath = "/db/movies";
 		
-		String xQuery = XQueryFileReader.Read("queries/retrieveById.txt");
+		String xQuery = XQueryFileReader.Read("queries/project1/retrieveById.txt");
 		xQuery = xQuery.replace("#id", id);
 		 
 		ArrayList<String> moviesWithSameId = xConnector.read(collectionPath, xQuery);

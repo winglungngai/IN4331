@@ -6,9 +6,12 @@
             @import url("resources/css/style.css");
          </style>
         <title>Music Search Engine</title>
+        <script src="resources/jquery-ui-1.10.3/jquery-1.9.1.js"></script>
+        <script src="resources/js/common.js"></script>
+        <script src="resources/js/project3.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
-<body>
+<body onload="initSearchField()">
 
 	<div id="container" style="">
 
@@ -27,9 +30,6 @@
 						type="submit" value="Upload File" />
 				</form>
 			</div>
-			<script src="resources/js/project3.js"></script>
-			<script
-				src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 		</div>
 
 		<div id="content" style="height:450px; float: left;">

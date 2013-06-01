@@ -5,17 +5,22 @@
 <%@ page import="org.apache.commons.fileupload.servlet.*"%>
 <%@ page import="org.apache.commons.io.output.*"%>
 <%@ page import="org.wdm.util.*"%>
-
+<html>
+	<head>
+		<title>MusicXML File Upload</title>
+		<script>
+			function displayMessage(){
+				alert(document.getElementById("message").innerHTML);
+				window.location.href = "project3.jsp";
+			}
+		</script>
+	</head>
+	<body onload="displayMessage()">
+	<div id="message" style="display:none">
 <%
 	File file;
 	int maxFileSize = 10000 * 1024;
 	int maxMemSize = 10000 * 1024;
-	
-	out.println("<html>");
-	out.println("<head>");
-	out.println("<title>MusicXML File Upload</title>");
-	out.println("</head>");
-	out.println("<body>");
 	
 	// Verify the content type
 	String contentType = request.getContentType();
@@ -63,7 +68,7 @@
 	} else {
 		out.println("<p>No file uploaded. Empty file received.</p>");
 	}
-	out.println("</body>");
-	out.println("</html>");
-	
 %>
+	</div>
+	</body>
+</html>

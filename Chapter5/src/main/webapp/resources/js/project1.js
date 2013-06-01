@@ -1,7 +1,6 @@
 
 var movies = "";
 
-initSearchField();
 
 function initSearchField()
 {
@@ -40,7 +39,7 @@ function setResultFieldBody()
 }
 
 function retrieveMovieData() {
-	$.post("ajax/asyncCall", {
+	$.post("ajax/SearchMovie", {
 		title : $("#Title").val(),
 		genre : $("#Genre").val(),
 		directorName : $("#DirectorName").val(),
@@ -49,13 +48,8 @@ function retrieveMovieData() {
 		latestYear : $("#LatestYear").val(),
 		keyword : $("#Keyword").val()
 	}, function(xml) {
-		$.get("resources/xslt/movies.xsl", function(xsl) {
-			xsltProcessor = new XSLTProcessor();
-			xsltProcessor.importStylesheet(xsl);
-			resultDocument = xsltProcessor.transformToFragment(xml, document);
-			document.getElementById("TableOfContents").appendChild(resultDocument);
-			setSearchStatus();
-		});
+		displayResult(xml, movieXsl, "#TableOfContents");
+		setSearchStatus();
 	});
 }
 
@@ -68,7 +62,10 @@ function setSearchStatus()
 
 }
 
+var movieXsl = null;
 
-
-
-
+$(function() {
+	$.get("resources/xslt/movies.xsl", function(data) {
+		movieXsl = data;
+	});
+})

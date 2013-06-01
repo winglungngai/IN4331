@@ -1,8 +1,6 @@
 
 var movies = "";
 
-initSearchField();
-
 function displayMusicFile(fileName)
 {
 	 var bodyHTMLCode = "";
@@ -56,13 +54,8 @@ function retrieveMovieData() {
 	$.post("ajax/SearchMusic", {
 		creditWords : $("#KeywordField").val()
 	}, function(xml) {
-		$.get("resources/xslt/music.xsl", function(xsl) {
-			xsltProcessor = new XSLTProcessor();
-			xsltProcessor.importStylesheet(xsl);
-			resultDocument = xsltProcessor.transformToFragment(xml, document);
-			document.getElementById("TableOfContents").appendChild(resultDocument);
-			setSearchStatus();
-		});
+		displayResult(xml, musicXsl, "#TableOfContents");
+		setSearchStatus();
 	});
 }
 
@@ -74,7 +67,10 @@ function setSearchStatus()
     document.getElementById("SearchStatus").innerHTML = searchStatus;
 
 }
+var musicXsl = null;
 
-
-
-
+$(function() {
+	$.get("resources/xslt/music.xsl", function(data) {
+		musicXsl = data;
+	});
+})
