@@ -11,21 +11,20 @@
 			</thead>
 			<tbody>
 				<xsl:for-each select="songs/song">
-				<a>
-						<xsl:attribute name="onClick">displayMusicFile('<xsl:value-of select="fileName"/>')</xsl:attribute>
 						
 					<tr id="song">
 						<td>
-						
-						<xsl:value-of select="credit[position() = 1]" /> <br></br> [
-						<xsl:value-of select="credit[position() = 2]" />
-							<xsl:for-each select="credit[position() > 2]">
-								 - <xsl:value-of select="." />
-							</xsl:for-each> ]
-						
+							<a>
+								<xsl:attribute name="style">display:block</xsl:attribute>
+								<xsl:attribute name="onClick">displayMusicFile('<xsl:value-of select="fileName"/>')</xsl:attribute>
+								<xsl:value-of select="credit[position() = 1]" /> <br></br> [
+								<xsl:value-of select="credit[position() = 2]" />
+									<xsl:for-each select="credit[position() > 2]">
+										 - <xsl:value-of select="." />
+								</xsl:for-each> ]
+							</a>
 						</td>
 					</tr>
-					</a>
 				</xsl:for-each>
 			</tbody>
 		</table>
