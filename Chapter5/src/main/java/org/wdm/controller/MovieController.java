@@ -1,5 +1,7 @@
 package org.wdm.controller;
 
+import java.util.Calendar;
+
 import org.apache.log4j.Logger;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -28,8 +30,12 @@ public class MovieController {
 		if(genre != null && genre.length() > 0) { uRequest.setGenre(genre); }
 		if(directorName != null && directorName.length() > 0) { uRequest.setDirectorName(directorName); }
 		if(actorName != null && actorName.length() > 0) { uRequest.setActorName(actorName); }
-		if(earliestYear != null && isNumeric(earliestYear) && latestYear != null && isNumeric(latestYear) ) 
-		{ uRequest.setTimeInterval(Integer.parseInt(earliestYear), Integer.parseInt(latestYear)); }
+		if((earliestYear != null && isNumeric(earliestYear)) || (latestYear != null && isNumeric(latestYear)) ) 
+		{
+			int earliest = (earliestYear != null && isNumeric(earliestYear)) ? Integer.parseInt(earliestYear) : 0;
+			int latest = (latestYear != null && isNumeric(latestYear)) ? Integer.parseInt(latestYear) : Calendar.getInstance().get(Calendar.YEAR);
+			uRequest.setTimeInterval(earliest, latest); 
+		}
 		if(keyword != null && keyword.length() > 0) { uRequest.setKeyword(keyword); }
 		
 		String xml = "";

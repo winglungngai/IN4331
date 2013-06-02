@@ -10,13 +10,14 @@ declare function local:getActor($startNode as element(), $id as xs:integer){
 let $ms:=doc("/movies/movies_alone.xml")/movies/movie
 let $as:=doc("/movies/artists_alone.xml")/artists/artist
 
-let $genre:=''
-let $actorName:=''
-let $directorName:=''
-let $keyword:='his'
-let $title:=''
-let $earliest:=''
-let $latest:=''
+let $genre:='#genre'
+let $actorName:='#actorName'
+let $directorName:='#directorName'
+let $keyword:='#keyword'
+let $title:='#title'
+let $earliest:='#earliest'
+let $latest:='#latest'
+
 
 let $moviesByGenre:=for $movies in $ms[genre=$genre] where (($genre)) return $movies
 
