@@ -1,8 +1,11 @@
 package org.wdm.util;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.Vector;
 
 import org.apache.xmlrpc.XmlRpcException;
@@ -25,15 +28,8 @@ import org.xmldb.api.base.XMLDBException;
 public class XMLDatabaseConnector {
 	protected String DRIVER = "org.exist.xmldb.DatabaseImpl";
 	protected String URI;
-	
-	/**
-	 * Test
-	 */
-	public static void main(String[] args) throws Exception {
-		XMLDatabaseConnector xConnector = new XMLDatabaseConnector();
-		String collectionPath = "/db/music";
-		xConnector.upload(collectionPath, "ohmygod3", "<omg></omg>");
-	}
+	private String username;
+	private String password;
 
 	/**
 	 * XMLDatabaseConnector connects to the XMLDatabase and executes XQuery command.
@@ -48,7 +44,24 @@ public class XMLDatabaseConnector {
 	 */
 	public XMLDatabaseConnector()
 	{
-		setURI("xmldb:exist://localhost:8080/exist/xmlrpc");
+		
+		Properties prop = new Properties();
+		
+		 InputStream inputStream = this.getClass().getClassLoader()
+	                .getResourceAsStream("config.properties");
+		 
+    	try {
+               //load a properties file
+    		prop.load(inputStream);
+ 
+               //get the property value and print it out
+    		setURI(prop.getProperty("existURI"));
+    		username = prop.getProperty("username");
+    		password = prop.getProperty("password");
+ 
+    	} catch (IOException ex) {
+    		ex.printStackTrace();
+        }
 	}
 
 	/**
@@ -96,14 +109,13 @@ public class XMLDatabaseConnector {
 		boolean succeeded = false;
         try {
 	        	
-			String uri = "http://localhost:8080/exist/xmlrpc";
 			 
 	        XmlRpcClient client = new XmlRpcClient();
 	        XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
 	
-			config.setServerURL(new URL(uri));
-	        config.setBasicUserName("admin");
-	        config.setBasicPassword("admin");
+			config.setServerURL(new URL(this.URI));
+	        config.setBasicUserName(this.username);
+	        config.setBasicPassword(this.password);
 	        client.setConfig(config);
 	        
 			// set parameters for XML-RPC call

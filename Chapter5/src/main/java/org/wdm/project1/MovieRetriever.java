@@ -138,12 +138,6 @@ public class MovieRetriever {
 		
 	}
 	
-	
-//	public ArrayList<Integer> retrieveByYear(int earliest, int latest)
-//	{
-//		
-//	}
-	
 	/**
 	 * MovieRetriever contains a list of methods to retrieve movies according to different criteria.
 	 */

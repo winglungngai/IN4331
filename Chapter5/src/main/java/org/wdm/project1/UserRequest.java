@@ -78,30 +78,6 @@ public class UserRequest {
 	/**
 	 * Retrieve movies according to the specified criteria.
 	 */
-//	public String retrieveMovie()
-//	{
-//		String xmlString = "<movies>";
-//		ArrayList<String> movieIds = retrieveMovieIds();
-//		
-//		XMLDatabaseConnector xConnector = new XMLDatabaseConnector();
-//		MovieRetriever mRetriever = new MovieRetriever(xConnector);
-//		
-//		for(String movieId : movieIds)
-//		{
-//			String movie = mRetriever.retrieveById(movieId);
-//			if(movie != null)
-//			{
-//				xmlString += movie;
-//			}
-//		}
-//		
-//		xmlString += "</movies>";
-//		return xmlString;
-//	}
-	
-	/**
-	 * Retrieve movies according to the specified criteria.
-	 */
 	@SuppressWarnings("unchecked")
 	public String retrieveMovies()
 	{
