@@ -51,7 +51,7 @@
 </head>
 <body>
 
-	<div class="ui-widget">
+	<div class="ui-widget controlsPannel" style="overflow:hidden;">
 		<div class="comboboxContainer">
 			<label>Select your preferred play</label>
 			<select id="play"></select>
@@ -70,7 +70,7 @@
 		</div>
 		
 		<div class="comboboxContainer">
-			<input id="searchButton" type="button" value="Search"></input>
+			<button id="searchButton" type="button" style="height:23px;"></button>
 		</div>
 	</div>
 	<div class="TableOfContents" id="playSummary" style="clear:both;float:left;width:49%;"></div>

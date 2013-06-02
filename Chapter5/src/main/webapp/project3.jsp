@@ -6,39 +6,38 @@
             @import url("resources/css/style.css");
          </style>
         <title>Music Search Engine</title>
+        <link rel="stylesheet" href="resources/jquery-ui-1.10.3/themes/base/jquery.ui.all.css">
         <script src="resources/jquery-ui-1.10.3/jquery-1.9.1.js"></script>
+		<script src="resources/jquery-ui-1.10.3/ui/jquery-ui.js"></script>
         <script src="resources/js/common.js"></script>
         <script src="resources/js/project3.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
-<body onload="initSearchField()">
+<body>
 
 	<div id="container" style="">
 
-		<div id="header" style="background-color: #00AAFF;">
-			<h1 style="margin-bottom: 0;">Project 3 - MusicXML</h1>
-		</div>
-
-		<div id="menu" style="height: 450px; width: 300px; float: left;">
-			<div id="SearchField"></div>
-			<div id="EditField"></div>
-			<div id="UploadField">
-				Select a MusicXml file to upload: <br />
-				<form action="UploadMusicXMLFile.jsp" method="post"
-					enctype="multipart/form-data" acceptcharset="UTF-8">
-					<input type="file" name="file" size="25" /> <br /> <input
-						type="submit" value="Upload File" />
-				</form>
+		<div id="menu" style="width: 500px; float: left;">
+			<div class="controlsPannel" style="margin-right:20px;">
+				<div id="SearchField">
+					<input id="KeywordField" type="text" size="25" placeholder="Find Music">
+	    			<button id="searchButton" style="height:23px;" onclick="retrieveMovieData()"></button>
+				</div>
+	
+				<div id="UploadField">
+					Select a MusicXml file to upload: <br />
+					<form action="UploadMusicXMLFile.jsp" method="post"
+						enctype="multipart/form-data" acceptcharset="UTF-8">
+						<input type="file" name="file" size="25" />  
+						<input type="submit" value="Upload File" />
+					</form>
+				</div>
 			</div>
+			
+			<div id="resultsDiv" class="TableOfContents"></div>
 		</div>
 
-		<div id="content" style="height:450px; float: left;">
-			Content goes here</div>
-
-		<div id="footer"
-			style="background-color: #00AAFF; clear: both; text-align: center;">
-			Copyright www.localhost.com</div>
-
+		<div id="content" style="height:450px; float: left;"></div>
 	</div>
 </body>
 </html>

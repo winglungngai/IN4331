@@ -254,9 +254,14 @@ var LIST_ACTS_BY_PLAY_URL = "ajax/listActsByPlay";
 					
 				}});
 			});
-		});
+		});		
 		
-		$('#searchButton').button().click(function() {
+		$('#searchButton').button({
+		      icons: {
+			        primary: "ui-icon-search"
+			      },
+			      text: false
+			    }).click(function() {
 			
 			var play = $('#play').val();
 			var act =$('#act').val();

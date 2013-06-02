@@ -16,12 +16,15 @@
 							<xsl:value-of select="@id" />
 						</td>
 						<td>
-							<xsl:value-of select="title" />
+							<a onclick='displayDetails("{generate-id(.)}")'>
+								<xsl:attribute name="href">#</xsl:attribute>
+								<xsl:value-of select="title" />
+							</a>
 						</td>
 						<td>
 							<xsl:value-of select="year" />
 						</td>
-						<td>
+						<td id="{generate-id(.)}" style="display:none;">
 							<xsl:value-of select="summary" />
 						</td>
 					</tr>
