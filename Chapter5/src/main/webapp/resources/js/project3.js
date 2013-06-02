@@ -30,6 +30,13 @@ $(function() {
 	      },
 	      text: false
 	    });
+    $("#searchLyricsButton" ).button({
+	      icons: {
+	        primary: "ui-icon-search"
+	      },
+	      text: false
+	    });
+    
 })
 
 
@@ -38,6 +45,16 @@ function retrieveMovieData() {
 		creditWords : $("#KeywordField").val()
 	}, function(xml) {
 		displayResult(xml, musicXsl, "#resultsDiv");
+		$("#KeywordLyricsField").empty();
+	});
+}
+
+function retrieveMovieByLyrics() {
+	$.post("ajax/SearchMusicByLyrics", {
+		lyrics : $("#KeywordLyricsField").val()
+	}, function(xml) {
+		displayResult(xml, musicXsl, "#resultsDiv");
+		$("#KeywordField").empty();
 	});
 }
 

@@ -23,6 +23,10 @@
 					<input id="KeywordField" type="text" size="25" placeholder="Find Music">
 	    			<button id="searchButton" style="height:23px;" onclick="retrieveMovieData()"></button>
 				</div>
+				<div id="SearchField">
+					<input id="KeywordLyricsField" type="text" size="25" placeholder="Find Music By Lyrics">
+	    			<button id="searchLyricsButton" style="height:23px;" onclick="retrieveMovieByLyrics()"></button>
+				</div>
 	
 				<div id="UploadField">
 					Select a MusicXml file to upload: <br />

@@ -67,6 +67,53 @@ public class MusicXMLRetriever {
 		}
 	}
 	
+	/*
+	 * Retrieve songs information by lyrics
+	 */
+	public String retrieveByLyrics(String lyrics)
+	{
+		String collectionPath = "/db/music";
+		
+		String xQuery = XQueryFileReader.Read("queries/project3/retrieveByLyrics.txt");
+		
+		String userInput = toXQuerySequence(lyrics);
+		xQuery = xQuery.replace("#userInput", userInput);
+		 
+		ArrayList<String> moviesWithSameId = xConnector.read(collectionPath, xQuery);
+		if(moviesWithSameId.size() > 0)
+		{
+			return moviesWithSameId.get(0);
+		}
+		else
+		{
+			return null;
+		}
+	}
+	
+	private String toXQuerySequence(String input)
+	{
+		String[] inputArray = input.split("\\s+");
+		
+		String userInput = "(";
+		
+		if(inputArray.length > 0)
+		{
+			userInput += "'" + inputArray[0] + "'";
+		}
+		
+		if(inputArray.length > 0)
+		{
+			for(int i = 1; i<inputArray.length; i++)
+			{
+				userInput += ", '" + inputArray[i] + "'";
+			}
+		}
+		
+		userInput += ")";	
+		
+		return userInput;
+	}
+	
 	
 	/**
 	 * MovieRetriever contains a list of methods to retrieve movies according to different criteria.

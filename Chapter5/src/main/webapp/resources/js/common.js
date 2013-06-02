@@ -10,6 +10,6 @@ function displayResult(xml, xsl, selector) {
 		xsltProcessor = new XSLTProcessor();
 		xsltProcessor.importStylesheet(xsl);
 		resultDocument = xsltProcessor.transformToFragment(xml, document);
-		$(selector).append(resultDocument);
+		$(selector).empty().append(resultDocument);
 	}
 }

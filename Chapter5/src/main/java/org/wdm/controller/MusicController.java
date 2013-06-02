@@ -52,4 +52,22 @@ public class MusicController {
 		header.setContentLength(documentBody.length);
 		return new HttpEntity<byte[]>(documentBody, header);
 	}
+	
+	@RequestMapping(value = "ajax/SearchMusicByLyrics", method = RequestMethod.POST)
+	public HttpEntity<byte[]> handleLyricsSearchRequest(
+			@RequestParam(value = "lyrics") String lyrics) {
+		
+		XMLDatabaseConnector xConnector = new XMLDatabaseConnector();
+		MusicXMLRetriever mRetriever = new MusicXMLRetriever(xConnector);
+		
+		String xml = "";
+		xml = mRetriever.retrieveByLyrics(lyrics);
+
+		byte[] documentBody = xml.getBytes();
+
+		HttpHeaders header = new HttpHeaders();
+		header.setContentType(new MediaType("application", "xml"));
+		header.setContentLength(documentBody.length);
+		return new HttpEntity<byte[]>(documentBody, header);
+	}
 }

@@ -1,0 +1,24 @@
+let $userInput:= #userInput
+    
+let $song-files:=
+    for $doc in collection("/music/?*.xml")
+       return if (every $keyword in $userInput satisfies 
+            contains($doc/score-partwise//lyric/text, $keyword))
+        then
+            util:document-name($doc)
+        else()
+
+return 
+    <songs>
+        {for $song in $song-files
+            let $credits:=doc(concat('/music/', $song))/score-partwise/credit/credit-words
+            return
+                <song>
+                    <fileName>
+                        { string($song)} 
+                    </fileName> 
+                    {for $creditss in $credits
+                        order by $creditss/@justify
+                        return  <credit> { string($creditss)} </credit> }
+                </song> }
+    </songs>
