@@ -22,51 +22,25 @@ function displayMusicFile(fileName)
 	$('#content').empty().append(bodyHTMLCode);
 }
 
-function initSearchField()
-{
-    setSearchFieldBody();
-}
-
-function setSearchFieldBody()
-{
-    var bodyHTMLCode = "";
-    bodyHTMLCode += "<input id=\"KeywordField\" type=\"text\" size=\"25\" placeholder=\"Find Music\">";
-    bodyHTMLCode += "<button id=\"SearchButton\" onclick=\"initResultField()  \">Find</button>";
+$(function() {
     
-    document.getElementById("SearchField").innerHTML = bodyHTMLCode;
-}
+    $("#searchButton" ).button({
+	      icons: {
+	        primary: "ui-icon-search"
+	      },
+	      text: false
+	    });
+})
 
-function initResultField()
-{
-    setResultFieldBody();
-    retrieveMovieData();
-}
-
-function setResultFieldBody()
-{
-    var bodyHTMLCode = "";
-    bodyHTMLCode += "<table class=\"TableOfContents\" id=\"TableOfContents\" width=\"250\" summary=\"ChaptersOverview\"></table>";
-    bodyHTMLCode += "<span id=\"SearchStatus\">waiting for search results....</span>";
-    document.getElementById("EditField").innerHTML = bodyHTMLCode;
-}
 
 function retrieveMovieData() {
 	$.post("ajax/SearchMusic", {
 		creditWords : $("#KeywordField").val()
 	}, function(xml) {
-		displayResult(xml, musicXsl, "#TableOfContents");
-		setSearchStatus();
+		displayResult(xml, musicXsl, "#resultsDiv");
 	});
 }
 
-
-function setSearchStatus()
-{
-    var searchStatus = "";
-    searchStatus += "found x results";
-    document.getElementById("SearchStatus").innerHTML = searchStatus;
-
-}
 var musicXsl = null;
 
 $(function() {
