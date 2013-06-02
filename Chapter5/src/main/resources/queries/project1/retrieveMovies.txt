@@ -1,13 +1,22 @@
+declare function local:getActor($startNode as element(), $id as xs:integer){
+    let $actor:=$startNode/descendant-or-self::artist[@id=$id]
+    return <actor>
+            {$actor/first_name}
+            {$actor/last_name}
+            {$actor/birth_date}
+        </actor>
+};
+
 let $ms:=doc("/movies/movies_alone.xml")/movies/movie
 let $as:=doc("/movies/artists_alone.xml")/artists/artist
 
-let $genre:='#genre'
-let $actorName:='#actorName'
-let $directorName:='#directorName'
-let $keyword:='#keyword'
-let $title:='#title'
-let $earliest:='#earliest'
-let $latest:='#latest'
+let $genre:=''
+let $actorName:=''
+let $directorName:=''
+let $keyword:='his'
+let $title:=''
+let $earliest:=''
+let $latest:=''
 
 let $moviesByGenre:=for $movies in $ms[genre=$genre] where (($genre)) return $movies
 
@@ -22,4 +31,19 @@ for $movie in $ms where
     (if($earliest and $latest) then $movie[year>=number($earliest) and year<=number($latest)] else(true())) and
     (if (($actorName) or ($directorName) or ($genre) or 
         ($keyword) or ($earliest and $latest) or ($title)) then true() else(not(true())))
-    return $movie
+    return <movie>
+            {$movie/title}
+            {$movie/year}
+            {$movie/genre}
+            {$movie/summary}
+            {$movie/country}
+            <director>
+                {local:getActor($as/.., $movie/director/@id)}
+            </director>
+            <actors>
+            {
+                let $actors:=$movie/actor
+                for $actor in $actors return local:getActor($as/.., $actor/@id)
+            }
+            </actors>
+        </movie>
