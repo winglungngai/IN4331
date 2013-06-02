@@ -54,7 +54,7 @@ public class MusicXMLRetriever {
 		String collectionPath = "/db/music";
 		
 		String xQuery = XQueryFileReader.Read("queries/project3/retrieveByCreditWords.txt");
-		xQuery = xQuery.replace("#creditWords", creditWords);
+		xQuery = xQuery.replace("#creditWords", toXQuerySequence(creditWords));
 		 
 		ArrayList<String> moviesWithSameId = xConnector.read(collectionPath, xQuery);
 		if(moviesWithSameId.size() > 0)

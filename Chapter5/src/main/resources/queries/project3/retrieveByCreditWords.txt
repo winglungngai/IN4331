@@ -1,12 +1,16 @@
 let $docs:=collection("/music/?*.xml")
-let $keyword:='#creditWords'
+let $creditWords:=#creditWords
 
-let $song-files:=distinct-values( 
-    for $doc in $docs
-        for $credit-words in $doc/score-partwise/credit/credit-words
-        where (contains(lower-case($credit-words), lower-case($keyword)))
-        return util:document-name($doc)
-    )
+let $song-files:=
+for $doc in collection("/music/?*.xml")
+   return 
+       if(every $creditWord in $creditWords satisfies 
+            some $credit-words in $doc/score-partwise/credit/credit-words satisfies 
+                contains(lower-case($credit-words), lower-case($creditWord))
+        )
+    then
+        util:document-name($doc)
+    else()
 
 return 
     <songs>
