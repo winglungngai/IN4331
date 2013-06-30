@@ -41,10 +41,11 @@ public class Main {
 		 * $HADOOP_HOME/conf directory must be in the CLASSPATH
 		 */
 		Configuration conf = new Configuration();
+		
 
 		
 		Job firstJob = new Job(conf, "Tokenize and compute document frequency ");
-
+		
 		/* Define the Mapper and the Reducer */
 		firstJob.setMapperClass(TermsMapper.class);
 		firstJob.setReducerClass(TermsReducer.class);
@@ -61,21 +62,27 @@ public class Main {
 
 		/* Do it! */
 		boolean firstJobStatus = firstJob.waitForCompletion(true);
-		
-		Job secondJob = new Job(conf, "");
-		/* Define the Mapper and the Reducer */
-		secondJob.setMapperClass(NoActionMapper.class);
-		secondJob.setReducerClass(TermsFreqReducer.class);
-		
-		secondJob.setOutputKeyClass(Text.class);
-		secondJob.setOutputValueClass(Text.class);
-		
-		FileInputFormat.addInputPath(secondJob, firstJobOutputPath);
-		Path secondJobOutputPath = new Path(args[1] + "/" + args[1]+VersionController.GetIncrementedVersionNumber());
-		FileOutputFormat.setOutputPath(secondJob, secondJobOutputPath);
-		
-		/* Do it! */
-		boolean secondJobStatus = secondJob.waitForCompletion(true);
+		if(firstJobStatus){
+			conf = new Configuration();
+			conf.set("totalNumberOfDocuments", 6+"");
+			Job secondJob = new Job(conf, "");
+			/* Define the Mapper and the Reducer */
+			secondJob.setMapperClass(NoActionMapper.class);
+			secondJob.setReducerClass(TermsFreqReducer.class);
+			
+			secondJob.setOutputKeyClass(Text.class);
+			secondJob.setOutputValueClass(Text.class);
+			
+			FileInputFormat.addInputPath(secondJob, firstJobOutputPath);
+			Path secondJobOutputPath = new Path(args[1] + "/" + args[1]+VersionController.GetIncrementedVersionNumber());
+			FileOutputFormat.setOutputPath(secondJob, secondJobOutputPath);
+			
+			/* Do it! */
+			System.exit(secondJob.waitForCompletion(true)==true?0:1);
+			
+		}else{
+			System.exit(1);
+		}
 	}
 
 	public static void processFile(String fileIn, String fileOut) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{

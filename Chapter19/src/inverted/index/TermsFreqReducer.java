@@ -13,11 +13,11 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 public class TermsFreqReducer extends Reducer<Text, Text, Text, Text> {
 
-	int totalNumberOfDocuments = 6;
+	int totalNumberOfDocuments = 1;
 	//the values are of form documentId/term_frequency 
 	public void reduce(Text key, Iterable<Text> values, Context context)
 			throws IOException, InterruptedException {
-		String token = key.toString();
+		totalNumberOfDocuments = Integer.parseInt(context.getConfiguration().get("totalNumberOfDocuments"));
 		StringBuffer sb = new StringBuffer();
 		List<String> valuesArray = new ArrayList<String>();
 		Iterator<Text> it = values.iterator();
@@ -30,7 +30,6 @@ public class TermsFreqReducer extends Reducer<Text, Text, Text, Text> {
 		for (String dIdTf : valuesArray) {
 			String[] dIdTfArray = dIdTf.trim().split("/");
 			if(dIdTfArray.length==2){
-				String documentId = dIdTfArray[0];
 				String documentFrequency = dIdTfArray[1];
 				sb.append(dIdTf.toString());
 				Double df = new Double(documentFrequency);

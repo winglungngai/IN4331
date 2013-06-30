@@ -15,10 +15,6 @@ public class TermsReducer extends Reducer<Text, Text, Text, Text> {
 			throws IOException, InterruptedException {
 		Map<String, DocFrequency> docFreq = new HashMap<String, DocFrequency>();
 		String token = key.toString();
-		if(key.toString().equals("his")){
-			int h = 0;
-			
-		}
 		for (Text dId : values) {
 			String documentId = dId.toString();
 			String tokenDocumentKey = token + "_" + documentId;

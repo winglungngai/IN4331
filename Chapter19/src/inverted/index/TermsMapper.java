@@ -19,9 +19,6 @@ public class TermsMapper extends Mapper<Object, Text, Text, Text> {
 			String documentId = tokens[0];
 			Text termDocumentId = new Text(documentId+ " ");
 			for (int i = 1; i < tokens.length; i++) {
-				if(tokens[i].equals("his")){
-					int k=0;
-				}
 				Text termValue = new Text(tokens[i]);
 				context.write(termValue, termDocumentId);
 			}
