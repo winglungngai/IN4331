@@ -1,4 +1,4 @@
-package inverted.file;
+package inverted.index.util;
 
 import java.io.IOException;
 import java.util.Scanner;
