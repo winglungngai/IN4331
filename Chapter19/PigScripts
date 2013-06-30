@@ -1,0 +1,37 @@
+actors = load 'title-and-actor.txt'
+as (title: chararray, actor: chararray, year: int, role: chararray);
+titles = group actors by title;
+titles_actors = foreach titles generate group, actors.actor;
+dump titles_actors;
+
+movies = load 'director-and-title.txt'
+as (director: chararray, title: chararray, year: int);
+directors = group movies by director;
+directors_titles = foreach directors generate group, movies.title;
+dump directors_titles;
+
+A = load 'title-and-actor.txt' as (title: chararray, actor: chararray, year: int, role: chararray);
+B = load 'director-and-title.txt' as (director: chararray, title: chararray, year: int);
+C = COGROUP A BY $0, B BY $1;
+D = foreach C {
+	generate $0,
+	'director', $2.$0,
+	'actors', $1.$1;
+	};
+dump D;
+
+A = load 'title-and-actor.txt' as (title: chararray, actor: chararray, year: int, role: chararray);
+B = load 'director-and-title.txt' as (director: chararray, title: chararray, year: int);
+C = COGROUP A BY $1 inner, B BY $0 inner;
+D = foreach C {
+	generate $0 as title,
+	'as director', $2.$1 as directedMovies,
+	'as actor', $1.$0 as actedMovies;
+	};
+
+E = foreach D generate title, flatten(actedMovies);
+F = foreach D generate title, flatten(directedMovies);
+G = join E by $0, F by 	$0;
+H = filter G by $1==$3;
+I = foreach H generate $0;
+dump I;
