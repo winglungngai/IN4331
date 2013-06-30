@@ -30,7 +30,7 @@ public class MovieMapper1 extends Mapper<LongWritable, Text, Text, Text> {
 		{
 			for(Actor actor : movie.getActors())
 			{
-				String text = movie.getMovieTitle() + "\t "+ actor.getFirstName() + " "+ actor.getLastName() + "\t"+ movie.getYear() + "\t"+ actor.getRole();
+				String text = movie.getMovieTitle() + "\t" + actor.getFirstName() + " "+ actor.getLastName() + "\t"+ actor.getBirth_year() + "\t"+ actor.getRole();
 				context.write(new Text(text), new Text(""));
 			}
 		}

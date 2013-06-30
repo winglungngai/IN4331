@@ -36,7 +36,7 @@ public class MovieSAXParser1 extends DefaultHandler{
 	private String tempFirstName;
 	private String tempLastname;
 	private String tempRole;
-	
+	private String tempBirthYear;
 	/**
 	 * SaxParser for parsing xml data to title-and-actor.txt format
 	 */
@@ -108,7 +108,7 @@ public class MovieSAXParser1 extends DefaultHandler{
 	 * @see org.xml.sax.helpers.DefaultHandler#characters(char[], int, int)
 	 */
 	public void characters(char[] ch, int start, int length) throws SAXException {
-		tempTextString = new String(ch,start,length);
+		tempTextString = (new String(ch,start,length)).trim();
 	}
 	
 	/**
@@ -129,6 +129,7 @@ public class MovieSAXParser1 extends DefaultHandler{
 			actor.setFirstName(tempFirstName);
 			actor.setLastName(tempLastname);
 			actor.setRole(tempRole);
+			actor.setBirth_year(tempBirthYear);
 			actors.add(actor);
 		}
 		else if (qName.equalsIgnoreCase("first_name")) {
@@ -139,6 +140,9 @@ public class MovieSAXParser1 extends DefaultHandler{
 		}
 		else if (qName.equalsIgnoreCase("role")) {
 			tempRole = tempTextString;
+		}
+		else if (qName.equalsIgnoreCase("birth_date")) {
+			tempBirthYear = tempTextString;
 		}		
 	}
 	

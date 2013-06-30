@@ -28,7 +28,7 @@ public class MovieMapper2 extends Mapper<LongWritable, Text, Text, Text> {
 		ArrayList<Movie> movies = spe.parse(is);
 		for(Movie movie : movies)
 		{
-				String text = movie.getDirector() + "\t " + movie.getMovieTitle() + "\t" + movie.getYear();
+				String text = movie.getDirector() + movie.getMovieTitle() + "\t" + movie.getYear();
 				context.write(new Text(text), new Text(""));
 		}
 	}
