@@ -54,8 +54,7 @@
 	
 					XMLDatabaseConnector xConnector = new XMLDatabaseConnector();
 					String collectionPath = "/db/music";
-					boolean succeeded = xConnector.upload(collectionPath,
-							fileName, fi.getString());
+					boolean succeeded = xConnector.upload(collectionPath, fileName, fi.getString());
 	
 					String successMessage = "File uploaded";
 					String failureMessage = "No file uploaded. Make sure valid xml file is uploaded, especially no zip file please";

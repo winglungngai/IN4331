@@ -70,4 +70,22 @@ public class MusicController {
 		header.setContentLength(documentBody.length);
 		return new HttpEntity<byte[]>(documentBody, header);
 	}
+	
+	@RequestMapping(value = "ajax/SearchMusicByNotes", method = RequestMethod.POST)
+	public HttpEntity<byte[]> handleNotesSearchRequest(
+			@RequestParam(value = "notes") String notes) {
+		
+		XMLDatabaseConnector xConnector = new XMLDatabaseConnector();
+		MusicXMLRetriever mRetriever = new MusicXMLRetriever(xConnector);
+		notes = notes.replaceAll(" ", "");
+		String xml = "";
+		xml = mRetriever.retrieveByNotes(notes);
+
+		byte[] documentBody = xml.getBytes();
+
+		HttpHeaders header = new HttpHeaders();
+		header.setContentType(new MediaType("application", "xml"));
+		header.setContentLength(documentBody.length);
+		return new HttpEntity<byte[]>(documentBody, header);
+	}
 }

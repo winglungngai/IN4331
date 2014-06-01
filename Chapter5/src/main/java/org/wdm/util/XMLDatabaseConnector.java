@@ -113,7 +113,7 @@ public class XMLDatabaseConnector {
 	        XmlRpcClient client = new XmlRpcClient();
 	        XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
 	
-			config.setServerURL(new URL(this.URI));
+			config.setServerURL(new URL("http://localhost:8080/exist/xmlrpc"));
 	        config.setBasicUserName(this.username);
 	        config.setBasicPassword(this.password);
 	        client.setConfig(config);

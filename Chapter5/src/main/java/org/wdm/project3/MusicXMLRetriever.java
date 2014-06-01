@@ -30,7 +30,7 @@ public class MusicXMLRetriever {
 	public String retrieveByFileName(String fileName)
 	{
 		String collectionPath = "/db/music";
-		
+		fileName=fileName.substring(fileName.lastIndexOf("/")+1);
 		String xQuery = XQueryFileReader.Read("queries/project3/retrieveByFileName.txt");
 		xQuery = xQuery.replace("#fileName", fileName);
 		 
@@ -78,6 +78,28 @@ public class MusicXMLRetriever {
 		
 		String userInput = toXQuerySequence(lyrics);
 		xQuery = xQuery.replace("#userInput", userInput);
+		 
+		ArrayList<String> moviesWithSameId = xConnector.read(collectionPath, xQuery);
+		if(moviesWithSameId.size() > 0)
+		{
+			return moviesWithSameId.get(0);
+		}
+		else
+		{
+			return null;
+		}
+	}
+	
+	/*
+	 * Retrieve songs information by lyrics
+	 */
+	public String retrieveByNotes(String notes)
+	{
+		String collectionPath = "/db/music";
+		
+		String xQuery = XQueryFileReader.Read("queries/project3/retrieveByNotes.txt");
+		notes.replaceAll(" ", "");
+		xQuery = xQuery.replace("#userInput", notes);
 		 
 		ArrayList<String> moviesWithSameId = xConnector.read(collectionPath, xQuery);
 		if(moviesWithSameId.size() > 0)

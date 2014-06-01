@@ -37,8 +37,23 @@ $(function() {
 	      text: false
 	    });
     
+    $("#searchPianoButton" ).button({
+	      icons: {
+	        primary: "ui-icon-search"
+	      },
+	      text: false
+	    });
+    
 })
 
+
+function searchByNotes(){
+	$.post("ajax/SearchMusicByNotes", {
+		notes : $("#pianoNotes").val()
+	}, function(xml) {
+		displayResult(xml, musicXsl, "#resultsDiv");
+	});
+}
 
 function retrieveMovieData() {
 	$.post("ajax/SearchMusic", {
