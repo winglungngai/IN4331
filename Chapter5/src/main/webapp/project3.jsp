@@ -7,6 +7,7 @@
          </style>
         <title>Music Search Engine</title>
         <link rel="stylesheet" href="resources/jquery-ui-1.10.3/themes/base/jquery.ui.all.css">
+        <link rel="stylesheet" type="text/css" href="resources/css/piano.css">
         <script src="resources/jquery-ui-1.10.3/jquery-1.9.1.js"></script>
 		<script src="resources/jquery-ui-1.10.3/ui/jquery-ui.js"></script>
         <script src="resources/js/common.js"></script>
